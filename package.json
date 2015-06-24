@@ -1,0 +1,24 @@
+{
+  "name": "deploy-agent",
+  "version": "0.0.0",
+  "description": "Webhook triggered deploy agent.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:zebulonj/deploy-agent.git"
+  },
+  "keywords": [
+    "deploy",
+    "webhook",
+    "node"
+  ],
+  "author": "Zebulon Young (zebulonj@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zebulonj/deploy-agent/issues"
+  },
+  "homepage": "https://github.com/zebulonj/deploy-agent"
+}
