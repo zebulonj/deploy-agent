@@ -3,17 +3,22 @@
 import express from 'express';
 import BodyParser from 'body-parser';
 
+import HookFactory from './hooks';
+
 const app = express();
 
 // Middleware
 app.use( BodyParser.json() );
 
-// Log all requests and return 200 status.
-app.use( function( req, res ) {
+// Log all requests.
+app.use( function( req, res, next ) {
 	console.log( "Request:", req.method, req.url, req.body );
 
-	res.status( 200 ).end();
+	next();
 });
+
+// Webhooks
+app.post( '/', HookFactory() );
 
 app.listen( 9001 );
 
