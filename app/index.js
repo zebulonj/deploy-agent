@@ -1,5 +1,7 @@
 'use strict';
 
+import path from 'path';
+
 import express from 'express';
 import BodyParser from 'body-parser';
 
@@ -7,6 +9,9 @@ import Rx from 'rx';
 
 import HookFactory from './hooks';
 import DeployScript from './deploy';
+import DeployTargets from './deploy/targets';
+
+const targets = DeployTargets( path.resolve( __dirname, '../tasks' ) );
 
 const app = express();
 
@@ -21,7 +26,7 @@ app.use( function( req, res, next ) {
 });
 
 // Webhooks
-app.post( '/', HookFactory({ Rx, deploy: DeployScript() }) );
+app.post( '/', HookFactory({ Rx, deploy: DeployScript({ targets }) }) );
 
 app.listen( 9001 );
 
