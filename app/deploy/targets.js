@@ -1,7 +1,7 @@
 'use strict';
 
-export default function( path ) {
-	console.log( "Loading deploy targets from " + path );
+export default function({ Rx, source }) {
+	console.log( "Loading deploy targets from " + source );
 
 	return {};
 };

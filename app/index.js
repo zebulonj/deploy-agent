@@ -11,7 +11,7 @@ import HookFactory from './hooks';
 import DeployScript from './deploy';
 import DeployTargets from './deploy/targets';
 
-const targets = DeployTargets( path.resolve( __dirname, '../tasks' ) );
+const targets = DeployTargets({ Rx, source: path.resolve( __dirname, '../tasks' ) });
 
 const app = express();
 

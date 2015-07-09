@@ -1,6 +1,6 @@
 'use strict';
 
-export default function() {
+export default function({ targets }) {
 	return function deployScript( payload ) {
 		console.log( "Deploy!" );
 	};
