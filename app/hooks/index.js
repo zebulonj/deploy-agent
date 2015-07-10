@@ -10,13 +10,10 @@
 export default function({ Rx, deploy }) {
 	const subject = new Rx.Subject();
 
-	subject.subscribe( function( payload ) {
-		console.log( "Hooked!", payload );
-
-		deploy( payload );
-	});
+	deploy( subject );
 
 	return function ( req, res, next ) {
+		console.log( "Hooked!", req.body );
 		subject.onNext( req.body );
 
 		res.status( 200 ).end();
