@@ -4,6 +4,7 @@ import path from 'path';
 import moment from 'moment';
 import Rx from 'rx';
 
+import exec from './exec';
 import fs from './fs';
 import git from './git';
 
@@ -34,6 +35,22 @@ export default function({ targets }) {
 			return target;
 		}
 
+		function linkShared( target ) {
+			const { root, release } = target;
+
+			return Rx.Observable.fromArray( target.shared )
+				.concatMap( share => fs.link( path.resolve( root, 'shared', share ), path.resolve( release, share ) ) )
+				.reduce( () => true );
+		}
+
+		function restart( target ) {
+			if ( target.restart ) {
+				return exec( target.restart );
+			}
+
+			return Rx.Observable.return( true );
+		}
+
 		// Clone the repository if not already mirrored.
 		// Update the mirror.
 		// Create release directory.
@@ -52,7 +69,9 @@ export default function({ targets }) {
 					.concatMap( () => git.update( target.repo ) )
 					.concatMap( () => fs.mkdir( target.release ) )
 					.concatMap( () => git.archive( target.branch, target.release, target.repo ) )
+					.concatMap( () => linkShared( target ) )
 					.concatMap( () => fs.link( target.release, target.current ) )
+					.concatMap( () => restart( target ) )
 					.tap( () => console.log( "Deployed:", target.name ) )
 
 				return seq;
